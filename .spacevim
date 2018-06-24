@@ -1,52 +1,44 @@
-" Let Vim and NeoVim shares the same plugin directory.
-" Comment it out if you don't like
-let g:spacevim_plug_home = '~/.vim/plugged'
+"                                           _
+"       ___ _ __   __ _  ___ ___     __   _(_)_ __ ___
+"      / __| -_ \ / _- |/ __/ _ \____\ \ / / | -_ - _ \
+"      \__ \ |_) | (_| | (_|  __/_____\ V /| | | | | | |
+"      |___/ .__/ \__._|\___\___|      \_/ |_|_| |_| |_|
+"          |_|
+"
+"   Copyright (c) 2017 Liu-Cheng Xu & Contributors
+"
+"   You can customize space-vim with .spacevim
+"   and don't have to take care of this file.
+"
+"   Author: Liu-Cheng Xu <xuliuchengxlc@gmail.com>
+"   URL: https://github.com/liuchengxu/space-vim
+"   License: MIT
 
-" The default leader key is space key.
-" Uncomment the line below and modify "<\Space>" if you prefer another
-" let g:spacevim_leader = "<\Space>"
+scriptencoding utf-8
 
-" The default local leader key is comma.
-" Uncomment the line below and modify ',' if you prefer another
-" let g:spacevim_localleader = ','
+let g:spacevim = get(g:, 'spacevim', {})
+let g:spacevim.base = $HOME.'/.space-vim'
+let g:spacevim.version = '0.8.0'
 
-" Enable the existing layers in space-vim
-let g:spacevim_layers = [
-      \ 'fzf', 'unite', 'better-defaults',
-      \ 'which-key',
-      \ ]
+" Identify platform {
+let g:spacevim.os = {}
+let g:spacevim.os.mac = has('macunix')
+let g:spacevim.os.linux = has('unix') && !has('macunix') && !has('win32unix')
+let g:spacevim.os.windows = has('win32') || has('win64')
+" }
 
-" If you want to have more control over the layer, try using Layer command.
-" if g:spacevim.gui
-"   Layer 'airline'
-" endif
+" Windows Compatible {
+" On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
+" across (heterogeneous) systems easier.
+if g:spacevim.os.windows
+  set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+endif
+" }
 
-" Manage your own plugins, refer to vim-plug's instruction for more detials.
-function! UserInit()
+set runtimepath+=$HOME/.space-vim/core
 
-  " Add plugin via Plug command.
-  Plug 'junegunn/seoul256.vim'
+call spacevim#begin()
 
-endfunction
+Layer 'spacevim'
 
-" Override the default settings as well as adding extras
-function! UserConfig()
-  " If you have installed the powerline fonts and want to enable airline layer
-  " let g:airline_powerline_fonts=1
-
-  " Use gui colors in terminal if available
-  function! s:enable_termgui()
-    if has('termguicolors')
-      set termguicolors
-      if g:spacevim.tmux
-        " If use vim inside tmux, see https://github.com/vim/vim/issues/993
-        " set Vim-specific sequences for RGB colors
-        let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-        let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-      endif
-    endif
-  endfunction
-
-  " If your terminal(-emulator) supports true colors, uncomment the line below
-  " call s:enable_termgui()
-endfunction
+call spacevim#end()
