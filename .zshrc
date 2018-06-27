@@ -163,7 +163,7 @@ antigen apply
 
 alias meteo="curl -4 wttr.in/Saint-Germain-en-Laye"
 alias monip="curl -s http://monip.ovh/|grep -oP '(?<=IP: ).*'"
-
+alias date="date -%F_%X"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
